@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using FoodDelivery.BLL.Models;
+using FoodDelivery.BLL.Services.Interfaces;
 using FoodDelivery.DAL.Entities;
 using FoodDelivery.DAL.UoW;
 
 namespace FoodDelivery.BLL.Services
 {
-    public class OrderService
+    public class OrderService : IOrderService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
