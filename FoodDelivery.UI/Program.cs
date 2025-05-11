@@ -1,9 +1,8 @@
-﻿using FoodDelivery.BLL.Mapping;
+﻿using Autofac;
 using FoodDelivery.BLL.Models;
-using FoodDelivery.BLL.Services;
+using FoodDelivery.BLL.Services.Interfaces;
 using FoodDelivery.DAL.Data;
-using FoodDelivery.DAL.UoW;
-using Microsoft.Extensions.DependencyInjection;
+using FoodDelivery.DI;
 
 namespace FoodDelivery.UI
 {
@@ -14,14 +13,14 @@ namespace FoodDelivery.UI
             Console.InputEncoding = System.Text.Encoding.UTF8;
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            var services = new ServiceCollection();
-            ConfigureServices(services);
-            var serviceProvider = services.BuildServiceProvider();
+            // Налаштовуємо DI через Autofac
+            var containerBuilder = DependencyConfig.ConfigureContainer();
+            var container = containerBuilder.Build();
 
             // Створюємо базу даних, якщо вона ще не існує
-            using (var scope = serviceProvider.CreateScope())
+            using (var scope = container.BeginLifetimeScope())
             {
-                var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                var dbContext = scope.Resolve<AppDbContext>();
                 dbContext.Database.EnsureCreated();
             }
 
@@ -30,11 +29,11 @@ namespace FoodDelivery.UI
 
             while (isRunning)
             {
-                using (var scope = serviceProvider.CreateScope())
+                using (var scope = container.BeginLifetimeScope())
                 {
-                    var dishService = scope.ServiceProvider.GetRequiredService<DishService>();
-                    var menuService = scope.ServiceProvider.GetRequiredService<MenuService>();
-                    var orderService = scope.ServiceProvider.GetRequiredService<OrderService>();
+                    var dishService = scope.Resolve<IDishService>();
+                    var menuService = scope.Resolve<IMenuService>();
+                    var orderService = scope.Resolve<IOrderService>();
 
                     Console.WriteLine("\nОберіть дію:");
                     Console.WriteLine("1. Показати меню за днем тижня");
@@ -85,20 +84,7 @@ namespace FoodDelivery.UI
             }
         }
 
-        private static void ConfigureServices(ServiceCollection services)
-        {
-            services.AddDbContext<AppDbContext>();
-
-            services.AddAutoMapper(typeof(MappingProfile));
-
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-            services.AddScoped<DishService>();
-            services.AddScoped<MenuService>();
-            services.AddScoped<OrderService>();
-        }
-
-        static void ShowMenuByDay(MenuService menuService)
+        static void ShowMenuByDay(IMenuService menuService)
         {
             Console.WriteLine("Введіть ID дня тижня (1-7):");
             if (int.TryParse(Console.ReadLine(), out int dayId))
@@ -123,7 +109,7 @@ namespace FoodDelivery.UI
             }
         }
 
-        static void ShowDishesByCategory(MenuService menuService)
+        static void ShowDishesByCategory(IMenuService menuService)
         {
             Console.WriteLine("Введіть ID категорії:");
             if (int.TryParse(Console.ReadLine(), out int categoryId))
@@ -148,7 +134,7 @@ namespace FoodDelivery.UI
             }
         }
 
-        static void SearchDishes(DishService dishService)
+        static void SearchDishes(IDishService dishService)
         {
             Console.WriteLine("Введіть назву для пошуку:");
             string searchTerm = Console.ReadLine();
@@ -167,14 +153,14 @@ namespace FoodDelivery.UI
             }
         }
 
-        static OrderDto CreateNewOrder(OrderService orderService)
+        static OrderDto CreateNewOrder(IOrderService orderService)
         {
             var order = orderService.CreateOrder();
             Console.WriteLine($"Створено нове замовлення з ID: {order.Id}");
             return order;
         }
 
-        static void AddDishToOrder(OrderService orderService, DishService dishService, int orderId)
+        static void AddDishToOrder(IOrderService orderService, IDishService dishService, int orderId)
         {
             Console.WriteLine("Введіть ID страви, яку хочете додати:");
             if (int.TryParse(Console.ReadLine(), out int dishId))
@@ -204,7 +190,7 @@ namespace FoodDelivery.UI
             }
         }
 
-        static void ViewCurrentOrder(OrderService orderService, int orderId)
+        static void ViewCurrentOrder(IOrderService orderService, int orderId)
         {
             var orderItems = orderService.GetOrderItems(orderId);
             if (orderItems.Any())

@@ -27,6 +27,11 @@ namespace FoodDelivery.DI
             // Регіструємо UoW
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
 
+            // Регіструємо сервіси
+            builder.RegisterType<DishService>().As<IDishService>();
+            builder.RegisterType<MenuService>().As<IMenuService>();
+            builder.RegisterType<OrderService>().As<IOrderService>();
+
             // Регіструємо AutoMapper
             builder.Register(ctx => new MapperConfiguration(cfg =>
             {
