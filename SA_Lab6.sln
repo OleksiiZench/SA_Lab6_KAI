@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodDelivery.BLL", "Food_De
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodDelivery.UI", "FoodDelivery.UI\FoodDelivery.UI.csproj", "{105B42A4-C3E3-4081-AA23-04D8BA94694F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodDelivery.DI", "FoodDelivery.DI\FoodDelivery.DI.csproj", "{CE9F4DC3-9188-4FA9-A458-F2D0D067810A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodDelivery.DI", "FoodDelivery.DI\FoodDelivery.DI.csproj", "{CE9F4DC3-9188-4FA9-A458-F2D0D067810A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodDelivery.Tests", "FoodDelivery.Tests\FoodDelivery.Tests.csproj", "{DA72322F-DB5D-4217-9439-18F58F815E30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{CE9F4DC3-9188-4FA9-A458-F2D0D067810A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE9F4DC3-9188-4FA9-A458-F2D0D067810A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE9F4DC3-9188-4FA9-A458-F2D0D067810A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA72322F-DB5D-4217-9439-18F58F815E30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA72322F-DB5D-4217-9439-18F58F815E30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA72322F-DB5D-4217-9439-18F58F815E30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA72322F-DB5D-4217-9439-18F58F815E30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
