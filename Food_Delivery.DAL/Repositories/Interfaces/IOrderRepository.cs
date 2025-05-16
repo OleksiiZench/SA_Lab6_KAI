@@ -7,5 +7,7 @@ namespace FoodDelivery.DAL.Repositories.Interfaces
         List<OrderItem> GetOrderItems(int orderId);
         decimal CalculateTotalPrice(int orderId);
         void AddDishToOrder(Order order, Dish dish, int quantity);
+        void RemoveOrderItem(OrderItem orderItem);
+        void UpdateOrderItemQuantity(int orderItemId, int quantity);
     }
 }

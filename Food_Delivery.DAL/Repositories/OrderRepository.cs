@@ -36,5 +36,20 @@ namespace FoodDelivery.DAL.Repositories
 
             _context.OrderItems.Add(orderItem);
         }
+
+        public void RemoveOrderItem(OrderItem orderItem)
+        {
+            _context.OrderItems.Remove(orderItem);
+        }
+
+        public void UpdateOrderItemQuantity(int orderItemId, int quantity)
+        {
+            var orderItem = _context.OrderItems.Find(orderItemId);
+            if (orderItem != null)
+            {
+                orderItem.Quantity = quantity;
+                _context.OrderItems.Update(orderItem);
+            }
+        }
     }
 }
