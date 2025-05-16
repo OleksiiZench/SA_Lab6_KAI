@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using Autofac;
+﻿using Autofac;
 using AutoMapper;
 using FoodDelivery.BLL.Mapping;
 using FoodDelivery.BLL.Services;

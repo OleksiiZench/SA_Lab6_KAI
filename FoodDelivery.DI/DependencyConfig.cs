@@ -12,10 +12,8 @@ namespace FoodDelivery.DI
 {
     public static class DependencyConfig
     {
-        public static ContainerBuilder ConfigureContainer()
+        public static void ConfigureContainer(ContainerBuilder builder)
         {
-            var builder = new ContainerBuilder();
-
             // Регіструємо контекст
             builder.RegisterType<AppDbContext>().AsSelf().InstancePerLifetimeScope();
 
@@ -43,8 +41,6 @@ namespace FoodDelivery.DI
                 var mapper = ctx.Resolve<MapperConfiguration>().CreateMapper();
                 return mapper;
             }).As<IMapper>().InstancePerLifetimeScope();
-
-            return builder;
         }
     }
 }
