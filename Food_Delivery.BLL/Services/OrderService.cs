@@ -47,5 +47,34 @@ namespace FoodDelivery.BLL.Services
         {
             return _unitOfWork.Orders.CalculateTotalPrice(orderId);
         }
+
+        public bool RemoveOrderItem(int orderId, int itemId)
+        {
+            var orderItem = _unitOfWork.Orders.GetOrderItems(orderId)
+                .FirstOrDefault(oi => oi.Id == itemId);
+
+            if (orderItem == null)
+                return false;
+
+            _unitOfWork.Orders.RemoveOrderItem(orderItem);
+            _unitOfWork.Save();
+            return true;
+        }
+
+        public bool UpdateOrderItem(int orderId, int itemId, int quantity)
+        {
+            if (quantity <= 0)
+                return false;
+
+            var orderItem = _unitOfWork.Orders.GetOrderItems(orderId)
+                .FirstOrDefault(oi => oi.Id == itemId);
+
+            if (orderItem == null)
+                return false;
+
+            _unitOfWork.Orders.UpdateOrderItemQuantity(itemId, quantity);
+            _unitOfWork.Save();
+            return true;
+        }
     }
 }

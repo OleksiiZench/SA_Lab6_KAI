@@ -9,5 +9,7 @@ namespace FoodDelivery.BLL.Services.Interfaces
         void AddDishToOrder(int orderId, int  dishId, int quantity);
         List<OrderItemDto> GetOrderItems(int orderId);
         decimal CalculateTotalOrderPrice(int orderId);
+        bool RemoveOrderItem(int orderId, int itemId);
+        bool UpdateOrderItem(int orderId, int itemId, int quantity);
     }
 }
